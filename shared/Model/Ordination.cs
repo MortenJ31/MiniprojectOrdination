@@ -21,8 +21,16 @@ public abstract class Ordination {
     /// Antal hele dage mellem startdato og slutdato. Begge dage inklusive.
     /// </summary>
     public int antalDage() {
-        // TODO: Implement!
-        return -1;
+
+        if (startDen > slutDen)
+        {
+            throw new ArgumentException("Startdato eller slutdato er ikke sat korrekt");
+        }
+
+        TimeSpan difference = slutDen - startDen;
+
+        // .days findes som attribut i en TimeSpan og 1+ for at det bliver begge dage inklusiv
+        return difference.Days + 1;
     }
 
     public override String ToString() {
