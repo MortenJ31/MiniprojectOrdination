@@ -139,8 +139,10 @@ public class DataService
         double antalMorgen, double antalMiddag, double antalAften, double antalNat, 
         DateTime startDato, DateTime slutDato) {
 
-        // TODO: Implement!
-        return null!;
+        var patient = db.Patienter.Find(patientId);
+        var laegemiddel = db.Laegemiddler.Fi
+        
+        return DagligFast!;
     }
 
     public DagligSkæv OpretDagligSkaev(int patientId, int laegemiddelId, Dosis[] doser, DateTime startDato, DateTime slutDato) {
