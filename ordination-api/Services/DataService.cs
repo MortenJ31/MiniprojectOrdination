@@ -131,8 +131,22 @@ public class DataService
     }
 
     public PN OpretPN(int patientId, int laegemiddelId, double antal, DateTime startDato, DateTime slutDato) {
-        // TODO: Implement!
-        return null!;
+
+        var patient = db.Patienter.Find(patientId);
+        var laegemiddel = db.Laegemiddler.Find(laegemiddelId);
+
+        // Dette kan reflekteres i test - med testmethod exceptions
+        if (patient == null)
+        {
+            throw new ArgumentException("Patient findes ikke");
+        }
+
+        if (laegemiddel == null)
+        {
+            throw new ArgumentException("lægemiddel findes ikke");
+        }
+
+        return PN;
     }
 
     public DagligFast OpretDagligFast(int patientId, int laegemiddelId, 
