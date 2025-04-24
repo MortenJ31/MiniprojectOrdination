@@ -142,17 +142,23 @@ public class DataService
         var patient = db.Patienter.Find(patientId);
         var laegemiddel = db.Laegemiddler.Find(laegemiddelId); 
 
+        // Dette kan reflekteres i test - med testmethod exceptions
         if (patient == null)
         {
             throw new ArgumentException("Patient findes ikke"); 
         }
 
-        if (patient == null)
+        if (laegemiddel == null)
         {
             throw new ArgumentException("lægemiddel findes ikke");
         }
 
-        return DagligFast!;
+        var DagligFast = new DagligFast(startDato, slutDato, laegemiddel, antalMorgen, antalMiddag, antalAften, antalNat)
+
+        db.Ordinationer.Add(DagligFast);
+        db.SaveChanges(); 
+
+        return DagligFast;
     }
 
     public DagligSkæv OpretDagligSkaev(int patientId, int laegemiddelId, Dosis[] doser, DateTime startDato, DateTime slutDato) {
