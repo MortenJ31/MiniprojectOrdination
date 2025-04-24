@@ -140,8 +140,18 @@ public class DataService
         DateTime startDato, DateTime slutDato) {
 
         var patient = db.Patienter.Find(patientId);
-        var laegemiddel = db.Laegemiddler.Fi
-        
+        var laegemiddel = db.Laegemiddler.Find(laegemiddelId); 
+
+        if (patient == null)
+        {
+            throw new Exception("Patient findes ikke"); 
+        }
+
+        if (patient == null)
+        {
+            throw new Exception("lægemiddel findes ikke");
+        }
+
         return DagligFast!;
     }
 
