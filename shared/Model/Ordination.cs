@@ -27,8 +27,10 @@ public abstract class Ordination {
             throw new ArgumentException("Startdato eller slutdato er ikke sat korrekt");
         }
 
-        var difference = slutDen - startDen; 
-        return -1;
+        TimeSpan difference = slutDen - startDen;
+
+        // .days findes som attribut i en TimeSpan og 1+ for at det bliver begge dage inklusiv
+        return difference.Days + 1;
     }
 
     public override String ToString() {
