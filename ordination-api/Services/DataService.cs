@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
-
 using shared.Model;
 using static shared.Util;
 using Data;
@@ -143,9 +142,13 @@ public class DataService
         return null!;
     }
 
-    public DagligSkæv OpretDagligSkaev(int patientId, int laegemiddelId, Dosis[] doser, DateTime startDato, DateTime slutDato) {
-        // TODO: Implement!
-        return null!;
+    public DagligSkæv OpretDagligSkaev(int patientId, int laegemiddelId, Dosis[] doser, DateTime startDato, DateTime slutDato)
+    {
+        var dagligSkæv = new DagligSkæv(startDato, slutDato, new Laegemiddel()); 
+        
+        dagligSkæv.doser = doser.ToList();
+
+        return dagligSkæv;
     }
 
     public string AnvendOrdination(int id, Dato dato) {
@@ -164,5 +167,4 @@ public class DataService
         // TODO: Implement!
         return -1;
 	}
-    
 }
