@@ -163,6 +163,8 @@ public class DataService
             antalNat);
 
         db.Ordinationer.Add(DagligFast);
+        patient.ordinationer.Add(DagligFast);
+
         db.SaveChanges(); 
 
         return DagligFast;
