@@ -144,12 +144,12 @@ public class DataService
 
         if (patient == null)
         {
-            throw new Exception("Patient findes ikke"); 
+            throw new ArgumentException("Patient findes ikke"); 
         }
 
         if (patient == null)
         {
-            throw new Exception("lægemiddel findes ikke");
+            throw new ArgumentException("lægemiddel findes ikke");
         }
 
         return DagligFast!;
