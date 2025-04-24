@@ -146,15 +146,12 @@ public class DataService
             throw new ArgumentException("lægemiddel findes ikke");
         }
 
-        var DagligFast = new DagligFast
+        var PN = new PN
         (
             startDato,
             slutDato,
-            laegemiddel,
-            antalMorgen,
-            antalMiddag,
-            antalAften,
-            antalNat
+            antal, 
+            laegemiddel
         );
 
         return PN;
