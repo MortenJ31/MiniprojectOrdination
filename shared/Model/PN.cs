@@ -22,8 +22,20 @@ public class PN : Ordination {
     }
 
     public override double doegnDosis() {
-    	// TODO: Implement!
-        return -1;
+        //Hvis listen er tom, returerne vi 0, da der ikke er nogen doser givet
+        if (dates.Count == 0)
+        {
+            return 0;
+        }
+
+        DateTime firstDate = dates.Min(d => d.dato);
+        DateTime lastDate = dates.Max(d => d.dato);
+
+        // Antal dage mellem første og sidste dato. +1 for at inkludere begge dage
+        int totalAmountOfDays = (lastDate - firstDate).Days + 1;
+
+        //Døgndosis
+        return (getAntalGangeGivet() * antalEnheder) / totalAmountOfDays;
     }
 
 
