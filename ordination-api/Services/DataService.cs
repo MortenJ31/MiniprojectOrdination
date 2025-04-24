@@ -154,6 +154,9 @@ public class DataService
             laegemiddel
         );
 
+        db.Ordinationer.Add(PN);
+        patient.ordinationer.Add(PN);
+
         return PN;
     }
 
