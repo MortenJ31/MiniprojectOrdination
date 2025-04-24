@@ -5,7 +5,6 @@ public abstract class Ordination {
     public DateTime startDen { get; set; }
     public DateTime slutDen { get; set; }
     public Laegemiddel laegemiddel { get; set; }
-    public Patient patient { get; set; }
     
     public Ordination(Laegemiddel laegemiddel, DateTime startDen = new DateTime(), DateTime slutDen = new DateTime()) {
     	this.startDen = startDen;
