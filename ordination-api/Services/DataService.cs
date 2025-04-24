@@ -146,6 +146,17 @@ public class DataService
             throw new ArgumentException("lægemiddel findes ikke");
         }
 
+        var DagligFast = new DagligFast
+        (
+            startDato,
+            slutDato,
+            laegemiddel,
+            antalMorgen,
+            antalMiddag,
+            antalAften,
+            antalNat
+        );
+
         return PN;
     }
 
@@ -167,14 +178,16 @@ public class DataService
             throw new ArgumentException("lægemiddel findes ikke");
         }
 
-        var DagligFast = new DagligFast(
+        var DagligFast = new DagligFast
+        (
             startDato,
             slutDato,
             laegemiddel,
             antalMorgen,
             antalMiddag,
             antalAften,
-            antalNat);
+            antalNat
+        );
 
         db.Ordinationer.Add(DagligFast);
         patient.ordinationer.Add(DagligFast);
