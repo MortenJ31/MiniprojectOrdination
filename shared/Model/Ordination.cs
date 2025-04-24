@@ -21,7 +21,13 @@ public abstract class Ordination {
     /// Antal hele dage mellem startdato og slutdato. Begge dage inklusive.
     /// </summary>
     public int antalDage() {
-        // TODO: Implement!
+
+        if (startDen > slutDen)
+        {
+            throw new ArgumentException("Startdato eller slutdato er ikke sat korrekt");
+        }
+
+        var difference = slutDen - startDen; 
         return -1;
     }
 
