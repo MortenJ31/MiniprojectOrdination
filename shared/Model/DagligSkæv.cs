@@ -22,8 +22,7 @@ public class DagligSkæv : Ordination {
 	}
 
 	public override double doegnDosis() {
-		// TODO: Implement!
-        return -1;
+		return doser.Sum(d => d.antal); // Does this need to check the date somehow??
 	}
 
 	public override String getType() {
