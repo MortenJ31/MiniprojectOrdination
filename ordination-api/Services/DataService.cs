@@ -155,6 +155,8 @@ public class DataService
 
         db.Ordinationer.Add(PN);
         patient.ordinationer.Add(PN);
+        
+        db.SaveChanges(); 
 
         return PN;
     }
