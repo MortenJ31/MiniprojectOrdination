@@ -226,11 +226,37 @@ public class DataService
         return dagligSkæv;
     }
 
-    public string AnvendOrdination(int id, Dato dato) {
-        // TODO: Implement!
-        return null!;
-        
-        
+    public string AnvendOrdination(int id, Dato dato) 
+    {    
+        //Find ordinationen i databasen baseret på ID
+        var ordination = db.Ordinationer.FirstOrDefault(o => o.OrdinationId == id);
+
+        //Tjek om ordinationen findes
+        if (ordination == null)
+        {
+            throw new ArgumentException("Ordinationen blev ikke fundet.");
+        }
+
+        //Tjek om ordination er gyldig
+        if (ordination.slutDen < dato.dato)
+        {
+            throw new InvalidOperationException("Ordinationen er udløbet og kan ikke anvendes.");
+        }
+
+        //Hvis det er en PN-ordination, skal anvendelsen logges
+        if (ordination is PN pnOrdination)
+        {
+            //Tilføj datoen til listen over anvendelsesdatoer
+            pnOrdination.dates.Add(dato);
+
+            //Gem ændringer i databasen
+            db.SaveChanges();
+
+            return "Ordinationen blev anvendt.";
+        }
+
+        //Hvis ordinationen ikke er af typen PN, kast en exception
+        throw new NotSupportedException("Kun PN-ordinationer kan anvendes på denne måde");
     }
 
     /// <summary>
