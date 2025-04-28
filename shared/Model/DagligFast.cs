@@ -23,20 +23,18 @@ public class DagligFast : Ordination {
 		return base.antalDage() * doegnDosis();
 	}
 
-	public override double doegnDosis()
-	{
-		var DosisInput = MorgenDosis.antal + MiddagDosis.antal + AftenDosis.antal + NatDosis.antal;
-		if (DosisInput <= 0)
-		{
-			throw new ArgumentException("Samlet dose er 0 eller mindre.");
-		} else if (DosisInput == null)
-		{
-			throw new NullReferenceException("Samlet dose returnerer null");
-		}
+    public override double doegnDosis()
+    {
+        var DosisInput = MorgenDosis.antal + MiddagDosis.antal + AftenDosis.antal + NatDosis.antal;
+        if (DosisInput <= 0)
+        {
+            throw new ArgumentException("Samlet dose er 0 eller mindre.");
+        }
         return DosisInput;
-	}
-	
-	public Dosis[] getDoser() {
+    }
+
+
+    public Dosis[] getDoser() {
 		Dosis[] doser = {MorgenDosis, MiddagDosis, AftenDosis, NatDosis};
 		return doser;
 	}
