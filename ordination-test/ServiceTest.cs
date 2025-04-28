@@ -51,11 +51,15 @@ public class ServiceTest
     }
 
     [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
     public void doegnDosisIsLessThanEqualZero()
     {
         Patient patient = service.GetPatienter().First();
         Laegemiddel laegemiddel = service.GetLaegemidler().First();
         DagligFast dagligFast = new DagligFast(DateTime.Now, DateTime.Now.AddDays(3), laegemiddel, 0, 0, -1, 0);
-        Assert.IsNotNull(dagligFast.doegnDosis()); 
+        dagligFast.doegnDosis();
+        dagligFast.AftenDosis.antal = 0; 
+        dagligFast.doegnDosis();
+
     }
 }
