@@ -11,7 +11,7 @@ public class ServiceTest
 {
     private DataService service;
 
-    [TestInitialize]
+    [TestInitialize]   
     public void SetupBeforeEachTest()
     {
         var optionsBuilder = new DbContextOptionsBuilder<OrdinationContext>();
