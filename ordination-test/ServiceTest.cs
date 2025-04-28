@@ -58,8 +58,7 @@ public class ServiceTest
         Laegemiddel laegemiddel = service.GetLaegemidler().First();
         DagligFast dagligFast = new DagligFast(DateTime.Now, DateTime.Now.AddDays(3), laegemiddel, 0, 0, -1, 0);
         dagligFast.doegnDosis();
-        dagligFast.AftenDosis.antal = 0; 
+        dagligFast.AftenDosis.antal = 0;
         dagligFast.doegnDosis();
-
     }
 }
