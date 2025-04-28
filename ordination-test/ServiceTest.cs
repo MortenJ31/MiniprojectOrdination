@@ -43,14 +43,20 @@ public class ServiceTest
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void TestAtKodenSmiderEnException()
+    public void OpretDagligFastNullExceptionTest()
     {
-        // Herunder skal man så kalde noget kode,
-        // der smider en exception.
+        Patient patient = service.GetPatienter().First();
+        service.OpretDagligFast(patient.PatientId, 0,
+     2, 2, 1, 0, DateTime.Now, DateTime.Now.AddDays(3));
+    }
 
-        // Hvis koden _ikke_ smider en exception,
-        // så fejler testen.
-
-        Console.WriteLine("Her kommer der ikke en exception. Testen fejler.");
+    [TestMethod]
+    [ExpectedException(typeof(NullReferenceException))]
+    public void doegnDosisNullExceptionTest()
+    {
+        Patient patient = service.GetPatienter().First();
+        Laegemiddel laegemiddel = service.GetLaegemidler().First();
+        DagligFast dagligFast = new DagligFast(DateTime.Now, DateTime.Now.AddDays(3), laegemiddel, 2, 2, 2, 2);
+        Assert.IsNotNull(dagligFast.doegnDosis()); 
     }
 }
