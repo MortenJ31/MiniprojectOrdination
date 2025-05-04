@@ -59,7 +59,7 @@ public class ServiceTest
     {
         //Arrange
         var StartDato = new DateTime(2025, 5, 1);
-        var SlutDato = new DateTime(2025, 5, 2);
+        var SlutDato = new DateTime(2025, 5, 1);
         var laegemiddel = service.GetLaegemidler().First();
         var dagligFast = new DagligFast(StartDato, SlutDato, laegemiddel, 1, 1, 1, 1);
 
@@ -75,7 +75,7 @@ public class ServiceTest
     {
         //Arrange
         var StartDato = new DateTime(2025, 5, 1);
-        var SlutDato = new DateTime(2025, 5, 4);
+        var SlutDato = new DateTime(2025, 5, 3);
         var laegemiddel = service.GetLaegemidler().First();
         var dagligFast = new DagligFast(StartDato, SlutDato, laegemiddel, 2, 0, 0, 0);
 
@@ -91,7 +91,7 @@ public class ServiceTest
     {
         //Arrange
         var StartDato = new DateTime(2025, 5, 1);
-        var SlutDato = new DateTime(2025, 5, 6);
+        var SlutDato = new DateTime(2025, 5, 5);
         var laegemiddel = service.GetLaegemidler().First();
         var dagligFast = new DagligFast(StartDato, SlutDato, laegemiddel, 0, 0, 0, 0);
 
@@ -107,7 +107,7 @@ public class ServiceTest
     {
         //Arrange
         var StartDato = new DateTime(2025, 5, 1);
-        var SlutDato = new DateTime(2025, 5, 11);
+        var SlutDato = new DateTime(2025, 5, 10);
         var laegemiddel = service.GetLaegemidler().First();
         var dagligFast = new DagligFast(StartDato, SlutDato, laegemiddel, 3, 2, 1, 4);
 
@@ -123,7 +123,7 @@ public class ServiceTest
     {
         //Arrange
         var StartDato = new DateTime(2025, 5, 1);
-        var SlutDato = new DateTime(2025, 5, 2);
+        var SlutDato = new DateTime(2025, 5, 1);
         var laegemiddel = service.GetLaegemidler().First();
         var dagligFast = new DagligFast(StartDato, SlutDato, laegemiddel, 0, 0, 0, 0);
 
@@ -139,7 +139,7 @@ public class ServiceTest
     {
         //Arrange
         var StartDato = new DateTime(2025, 5, 1);
-        var SlutDato = new DateTime(2025, 6, 1);
+        var SlutDato = new DateTime(2025, 5, 31);
         var laegemiddel = service.GetLaegemidler().First();
         var dagligFast = new DagligFast(StartDato, SlutDato, laegemiddel, 1, 1, 1, 1);
 
