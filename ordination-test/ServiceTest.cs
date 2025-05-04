@@ -53,4 +53,18 @@ public class ServiceTest
 
         Console.WriteLine("Her kommer der ikke en exception. Testen fejler.");
     }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void GetAnbefaletDosisPerDøgnThrowsExceptionOnWrongPatientId()
+    {
+        var result = service.GetAnbefaletDosisPerDøgn(123, 1);
+    }
+    
+    [TestMethod]
+    public void GetAnbefaletDosisPerDøgnWorks()
+    {
+        var result = service.GetAnbefaletDosisPerDøgn(1, 1);
+        Assert.IsNotNull(result);
+    }
 }
