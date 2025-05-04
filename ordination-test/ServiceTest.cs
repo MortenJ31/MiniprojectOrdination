@@ -53,4 +53,100 @@ public class ServiceTest
 
         Console.WriteLine("Her kommer der ikke en exception. Testen fejler.");
     }
+
+    [TestMethod]
+    public void SamletDosis_TC1_EnDagMedFireDoser()
+    {
+        //Arrange
+        var StartDato = new DateTime(2025, 5, 1);
+        var SlutDato = new DateTime(2025, 5, 2);
+        var laegemiddel = service.GetLaegemidler().First();
+        var dagligFast = new DagligFast(StartDato, SlutDato, laegemiddel, 1, 1, 1, 1);
+
+        //Act
+        var samletDosis = dagligFast.samletDosis();
+
+        //Assert
+        Assert.AreEqual(4, samletDosis);
+    }
+
+    [TestMethod]
+    public void SamletDosis_TC2_TreDageMedToMorgenDoser()
+    {
+        //Arrange
+        var StartDato = new DateTime(2025, 5, 1);
+        var SlutDato = new DateTime(2025, 5, 4);
+        var laegemiddel = service.GetLaegemidler().First();
+        var dagligFast = new DagligFast(StartDato, SlutDato, laegemiddel, 2, 0, 0, 0);
+
+        //Act
+        var samletDosis = dagligFast.samletDosis();
+
+        //Assert
+        Assert.AreEqual(6, samletDosis);
+    }
+
+    [TestMethod]
+    public void SamletDosis_TC3_FemDageMedNulDoser()
+    {
+        //Arrange
+        var StartDato = new DateTime(2025, 5, 1);
+        var SlutDato = new DateTime(2025, 5, 6);
+        var laegemiddel = service.GetLaegemidler().First();
+        var dagligFast = new DagligFast(StartDato, SlutDato, laegemiddel, 0, 0, 0, 0);
+
+        //Act
+        var samletDosis = dagligFast.samletDosis();
+
+        //Assert
+        Assert.AreEqual(0, samletDosis);
+    }
+
+    [TestMethod]
+    public void SamletDosis_TC4_TiDageMedNoejeDoser()
+    {
+        //Arrange
+        var StartDato = new DateTime(2025, 5, 1);
+        var SlutDato = new DateTime(2025, 5, 11);
+        var laegemiddel = service.GetLaegemidler().First();
+        var dagligFast = new DagligFast(StartDato, SlutDato, laegemiddel, 3, 2, 1, 4);
+
+        //Act
+        var samletDosis = dagligFast.samletDosis();
+
+        //Assert
+        Assert.AreEqual(100, samletDosis);
+    }
+
+    [TestMethod]
+    public void SamletDosis_TC5_EnDagMedNulDoser()
+    {
+        //Arrange
+        var StartDato = new DateTime(2025, 5, 1);
+        var SlutDato = new DateTime(2025, 5, 2);
+        var laegemiddel = service.GetLaegemidler().First();
+        var dagligFast = new DagligFast(StartDato, SlutDato, laegemiddel, 0, 0, 0, 0);
+
+        //Act
+        var samletDosis = dagligFast.samletDosis();
+
+        //Assert
+        Assert.AreEqual(0, samletDosis);
+    }
+
+    [TestMethod]
+    public void SamletDosis_TC6_31DageMedFireDoser()
+    {
+        //Arrange
+        var StartDato = new DateTime(2025, 5, 1);
+        var SlutDato = new DateTime(2025, 6, 1);
+        var laegemiddel = service.GetLaegemidler().First();
+        var dagligFast = new DagligFast(StartDato, SlutDato, laegemiddel, 1, 1, 1, 1);
+
+        //Act
+        var samletDosis = dagligFast.samletDosis();
+
+        //Assert
+        Assert.AreEqual(124, samletDosis);
+    }
 }
