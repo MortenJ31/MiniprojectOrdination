@@ -289,7 +289,7 @@ public class ServiceTest
     {
         // Arrange
         var laegemiddel = new Laegemiddel("Acetylsalisylsyre", 0.1, 1.0, 2.0, "Styk");
-        var pn = new PN(new DateTime(2025, 5, 1), new DateTime(2023, 5, 10), 1.0, laegemiddel);
+        var pn = new PN(new DateTime(2025, 5, 1), new DateTime(2025, 5, 10), 1.0, laegemiddel);
         var dato = new Dato { dato = new DateTime(2025, 05, 10) };
 
         // Act
@@ -304,7 +304,7 @@ public class ServiceTest
     {
         // Arrange
         var laegemiddel = new Laegemiddel("Acetylsalisylsyre", 0.1, 1.0, 2.0, "Styk");
-        var pn = new PN(new DateTime(2025, 5, 1), new DateTime(2023, 5, 10), 1.0, laegemiddel);
+        var pn = new PN(new DateTime(2025, 5, 1), new DateTime(2025, 5, 10), 1.0, laegemiddel);
         var dato = new Dato { dato = new DateTime(2025, 05, 05) };
 
         // Act
@@ -319,7 +319,7 @@ public class ServiceTest
     {
         //Arrange
         var laegemiddel = new Laegemiddel("Acetylsalisylsyre", 0.1, 1.0, 2.0, "Styk");
-        var pn = new PN(new DateTime(2025, 5, 1), new DateTime(2023, 5, 10), 1.0, laegemiddel);
+        var pn = new PN(new DateTime(2025, 5, 1), new DateTime(2025, 5, 10), 1.0, laegemiddel);
         var dato = new Dato { dato = new DateTime(2025, 04, 30) };
 
         //Act
@@ -334,7 +334,7 @@ public class ServiceTest
     {
         //Arrange
         var laegemiddel = new Laegemiddel("Acetylsalisylsyre", 0.1, 1.0, 2.0, "Styk");
-        var pn = new PN(new DateTime(2025, 5, 1), new DateTime(2023, 5, 10), 1.0, laegemiddel);
+        var pn = new PN(new DateTime(2025, 5, 1), new DateTime(2025, 5, 10), 1.0, laegemiddel);
         var dato = new Dato { dato = new DateTime(2025, 05, 11) };
 
         //Act
@@ -349,7 +349,7 @@ public class ServiceTest
     {
         //Arrange
         var laegemiddel = new Laegemiddel("Acetylsalisylsyre", 0.1, 1.0, 2.0, "Styk");
-        var pn = new PN(new DateTime(2025, 5, 1), new DateTime(2023, 5, 10), 1.0, laegemiddel);
+        var pn = new PN(new DateTime(2025, 5, 1), new DateTime(2025, 5, 10), 1.0, laegemiddel);
         var dato = new Dato { dato = new DateTime(2025, 05, 05) };
 
         //Act
