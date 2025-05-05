@@ -111,7 +111,8 @@ public class ServiceTest
             // Forventet exception blev kastet
         }
     }
-
+    
+    // ------------------------ GetAnbefaletDosisPerDøgn() DataService ------------------------
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
     public void GetAnbefaletDosisPerDøgn_TC1_ThrowsExceptionOnInvalidPatientId()
@@ -275,4 +276,12 @@ public class ServiceTest
         ordination = new DagligSkæv(new DateTime(2025, 5, 1), new DateTime(2025, 4, 1), lm);
         Assert.ThrowsException<ArgumentException>(() => ordination.antalDage());
     }
+    
+    // ------------------------- doegnDosis() DagligSkæv -------------------------
+    [TestMethod]
+    public void doegnDosis_TC1_()
+    {
+        
+    }
+    
 }
