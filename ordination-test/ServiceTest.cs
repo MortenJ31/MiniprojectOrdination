@@ -11,7 +11,7 @@ public class ServiceTest
 {
     private DataService service;
 
-    [TestInitialize]
+    [TestInitialize]   
     public void SetupBeforeEachTest()
     {
         var optionsBuilder = new DbContextOptionsBuilder<OrdinationContext>();
@@ -43,15 +43,23 @@ public class ServiceTest
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void TestAtKodenSmiderEnException()
+    public void OpretDagligFastNullExceptionTest()
     {
-        // Herunder skal man så kalde noget kode,
-        // der smider en exception.
+        Patient patient = service.GetPatienter().First();
+        service.OpretDagligFast(patient.PatientId, 0,
+     2, 2, 1, 0, DateTime.Now, DateTime.Now.AddDays(3));
+    }
 
-        // Hvis koden _ikke_ smider en exception,
-        // så fejler testen.
-
-        Console.WriteLine("Her kommer der ikke en exception. Testen fejler.");
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void doegnDosisIsLessThanEqualZero()
+    {
+        Patient patient = service.GetPatienter().First();
+        Laegemiddel laegemiddel = service.GetLaegemidler().First();
+        DagligFast dagligFast = new DagligFast(DateTime.Now, DateTime.Now.AddDays(3), laegemiddel, 0, 0, -1, 0);
+        dagligFast.doegnDosis();
+        dagligFast.AftenDosis.antal = 0;
+        dagligFast.doegnDosis();
     }
 
     [TestMethod]
