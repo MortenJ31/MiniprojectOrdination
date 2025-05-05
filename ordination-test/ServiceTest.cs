@@ -178,10 +178,10 @@ public class ServiceTest
         var samletDosis = dagligFast.samletDosis();
 
         //Assert
-        Assert.AreEqual(0, samletDosis);
+        Assert.ThrowsException<ArgumentException>(() => dagligFast.samletDosis());
     }
 
-    [TestMethod]
+    [TestMethod] 
     public void SamletDosis_TC4_TiDageMedNoejeDoser()
     {
         //Arrange
