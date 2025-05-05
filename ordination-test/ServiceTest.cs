@@ -92,6 +92,25 @@ public class ServiceTest
     }
 
     [TestMethod]
+    public void DagligFastStartDenStørreEllerLigSlutDen()
+    {
+        Laegemiddel laegemiddel = service.GetLaegemidler().First();
+
+        // TC1: Start date equals end date
+        Assert.ThrowsException<Exception>(() =>
+            new DagligFast(DateTime.Now, DateTime.Now, laegemiddel, 1, 1, 1, 1),
+            "Should throw exception when start date equals end date");
+
+        // TC2: Start date is after end date
+        DateTime startDate = DateTime.Now.AddDays(5);
+        DateTime endDate = DateTime.Now.AddDays(2);  // Earlier than start date
+
+        Assert.ThrowsException<Exception>(() =>
+            new DagligFast(startDate, endDate, laegemiddel, 1, 1, 1, 1),
+            "Should throw exception when start date is after end date");
+    }
+
+    [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
     public void GetAnbefaletDosisPerDøgnThrowsExceptionOnWrongPatientId()
     {
