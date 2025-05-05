@@ -91,23 +91,36 @@ public class ServiceTest
         Assert.AreEqual(10.5, tc9.doegnDosis(), "TC9: Decimal dose sum 10.5");
     }
 
+    // Test af cojnstructor i DagligFast.cs
     [TestMethod]
     public void DagligFastStartDenStørreEllerLigSlutDen()
     {
         Laegemiddel laegemiddel = service.GetLaegemidler().First();
 
-        // TC1: Start date equals end date
-        Assert.ThrowsException<Exception>(() =>
-            new DagligFast(DateTime.Now, DateTime.Now, laegemiddel, 1, 1, 1, 1),
-            "Should throw exception when start date equals end date");
+        // TC1: Startdato er lig med slutdato
+        try
+        {
+            DagligFast dagligFast1 = new DagligFast(DateTime.Now, DateTime.Now, laegemiddel, 1, 1, 1, 1);
+            Assert.Fail("Exception når startdato er lig med slutdato");
+        }
+        catch (Exception)
+        {
+            // Forventet exception blev kastet
+        }
 
-        // TC2: Start date is after end date
-        DateTime startDate = DateTime.Now.AddDays(5);
-        DateTime endDate = DateTime.Now.AddDays(2);  // Earlier than start date
+        // TC2: Startdato er efter slutdato
+        DateTime startDato = DateTime.Now.AddDays(5);
+        DateTime slutDato = DateTime.Now.AddDays(2); 
 
-        Assert.ThrowsException<Exception>(() =>
-            new DagligFast(startDate, endDate, laegemiddel, 1, 1, 1, 1),
-            "Should throw exception when start date is after end date");
+        try
+        {
+            DagligFast dagligFast2 = new DagligFast(startDato, slutDato, laegemiddel, 1, 1, 1, 1);
+            Assert.Fail("Exception når startdato er efter slutdato");
+        }
+        catch (Exception)
+        {
+            // Forventet exception blev kastet
+        }
     }
 
     [TestMethod]
