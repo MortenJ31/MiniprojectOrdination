@@ -174,9 +174,6 @@ public class ServiceTest
         var laegemiddel = service.GetLaegemidler().First();
         var dagligFast = new DagligFast(StartDato, SlutDato, laegemiddel, 0, 0, 0, 0);
 
-        //Act
-        var samletDosis = dagligFast.samletDosis();
-
         //Assert
         Assert.ThrowsException<ArgumentException>(() => dagligFast.samletDosis());
     }
@@ -206,11 +203,8 @@ public class ServiceTest
         var laegemiddel = service.GetLaegemidler().First();
         var dagligFast = new DagligFast(StartDato, SlutDato, laegemiddel, 0, 0, 0, 0);
 
-        //Act
-        var samletDosis = dagligFast.samletDosis();
-
         //Assert
-        Assert.AreEqual(0, samletDosis);
+        Assert.ThrowsException<ArgumentException>(() => dagligFast.samletDosis());
     }
 
     [TestMethod]
