@@ -13,6 +13,10 @@ public class DagligFast : Ordination {
         MiddagDosis = new Dosis(CreateTimeOnly(12, 0, 0), middagAntal);
         AftenDosis = new Dosis(CreateTimeOnly(18, 0, 0), aftenAntal);
         NatDosis = new Dosis(CreateTimeOnly(23, 59, 0), natAntal);
+        if (startDen > slutDen)
+        {
+            throw new Exception("StartDen større end slutDen.");
+        }
 	}
 
     public DagligFast() : base(null!, new DateTime(), new DateTime()) {
@@ -23,12 +27,18 @@ public class DagligFast : Ordination {
 		return base.antalDage() * doegnDosis();
 	}
 
-	public override double doegnDosis()
-	{
-		return MorgenDosis.antal + MiddagDosis.antal + AftenDosis.antal + NatDosis.antal;
-	}
-	
-	public Dosis[] getDoser() {
+    public override double doegnDosis()
+    {
+        var DosisInput = MorgenDosis.antal + MiddagDosis.antal + AftenDosis.antal + NatDosis.antal;
+        if (DosisInput <= 0)
+        {
+            throw new ArgumentException("Samlet dose er 0 eller mindre.");
+        }
+        return DosisInput;
+    }
+
+
+    public Dosis[] getDoser() {
 		Dosis[] doser = {MorgenDosis, MiddagDosis, AftenDosis, NatDosis};
 		return doser;
 	}
