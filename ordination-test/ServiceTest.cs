@@ -51,7 +51,7 @@ public class ServiceTest
     }
 
     [TestMethod]
-    public void TC2doegnDosisIsLessThanOrEqualToZero()
+    public void doegnDosisIsLessThanOrEqualToZero()
     {
         Laegemiddel laegemiddel = service.GetLaegemidler().First();
 
