@@ -1,9 +1,8 @@
 namespace ordination_test;
 
-using Microsoft.EntityFrameworkCore;
-
-using Service;
 using Data;
+using Microsoft.EntityFrameworkCore;
+using Service;
 using shared.Model;
 
 [TestClass]
@@ -11,7 +10,7 @@ public class ServiceTest
 {
     private DataService service;
 
-    [TestInitialize]   
+    [TestInitialize]
     public void SetupBeforeEachTest()
     {
         var optionsBuilder = new DbContextOptionsBuilder<OrdinationContext>();
@@ -47,19 +46,81 @@ public class ServiceTest
     {
         Patient patient = service.GetPatienter().First();
         service.OpretDagligFast(patient.PatientId, 0,
-     2, 2, 1, 0, DateTime.Now, DateTime.Now.AddDays(3));
+ 2, 2, 1, 0, DateTime.Now, DateTime.Now.AddDays(3));
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
-    public void doegnDosisIsLessThanEqualZero()
+    public void DoegnDosisTest()
     {
-        Patient patient = service.GetPatienter().First();
         Laegemiddel laegemiddel = service.GetLaegemidler().First();
-        DagligFast dagligFast = new DagligFast(DateTime.Now, DateTime.Now.AddDays(3), laegemiddel, 0, 0, -1, 0);
-        dagligFast.doegnDosis();
-        dagligFast.AftenDosis.antal = 0;
-        dagligFast.doegnDosis();
+
+        // TC1: Negative dose - throws exception
+        DagligFast tc1 = new DagligFast(DateTime.Now, DateTime.Now.AddDays(3), laegemiddel, 0, 0, -1, 0);
+        Assert.ThrowsException<ArgumentException>(() => tc1.doegnDosis(), "TC1: Negative dose throw ArgumentException");
+
+        // TC2: All zeros - throws exception
+        DagligFast tc2 = new DagligFast(DateTime.Now, DateTime.Now.AddDays(3), laegemiddel, 0, 0, 0, 0);
+        Assert.ThrowsException<ArgumentException>(() => tc2.doegnDosis(), "TC2: Alle parametre som nul throw ArgumentException");
+
+        // TC3: Morning dose only (1, 0, 0, 0)
+        DagligFast tc3 = new DagligFast(DateTime.Now, DateTime.Now.AddDays(3), laegemiddel, 1, 0, 0, 0);
+        Assert.AreEqual(1, tc3.doegnDosis(), "TC3: Morgen dose only");
+
+        // TC4: Noon dose only (0, 1, 0, 0)
+        DagligFast tc4 = new DagligFast(DateTime.Now, DateTime.Now.AddDays(3), laegemiddel, 0, 1, 0, 0);
+        Assert.AreEqual(1, tc4.doegnDosis(), "TC4: middag dose only");
+
+        // TC5: Evening dose only (0, 0, 1, 0)
+        DagligFast tc5 = new DagligFast(DateTime.Now, DateTime.Now.AddDays(3), laegemiddel, 0, 0, 1, 0);
+        Assert.AreEqual(1, tc5.doegnDosis(), "TC5: Aften dose only");
+
+        // TC6: Night dose only (0, 0, 0, 1)
+        DagligFast tc6 = new DagligFast(DateTime.Now, DateTime.Now.AddDays(3), laegemiddel, 0, 0, 0, 1);
+        Assert.AreEqual(1, tc6.doegnDosis(), "TC6: Nat dose only");
+
+        // TC7: Multiple doses (2, 1, 4, 2)
+        DagligFast tc7 = new DagligFast(DateTime.Now, DateTime.Now.AddDays(3), laegemiddel, 2, 1, 4, 2);
+        Assert.AreEqual(9, tc7.doegnDosis(), "TC7: Multiple doses sum should be 9");
+
+        // TC8: Large morning dose (14, 0, 0, 0)
+        DagligFast tc8 = new DagligFast(DateTime.Now, DateTime.Now.AddDays(3), laegemiddel, 14, 0, 0, 0);
+        Assert.AreEqual(14, tc8.doegnDosis(), "TC8: Stor morning dose");
+
+        // TC9: Decimal doses (2.5, 4, 2, 2)
+        DagligFast tc9 = new DagligFast(DateTime.Now, DateTime.Now.AddDays(3), laegemiddel, 2.5, 4, 2, 2);
+        Assert.AreEqual(10.5, tc9.doegnDosis(), "TC9: Decimal dose sum 10.5");
+    }
+
+    // Test af cojnstructor i DagligFast.cs
+    [TestMethod]
+    public void DagligFastStartDenStørreEllerLigSlutDen()
+    {
+        Laegemiddel laegemiddel = service.GetLaegemidler().First();
+
+        // TC1: Startdato er lig med slutdato
+        try
+        {
+            DagligFast dagligFast1 = new DagligFast(DateTime.Now, DateTime.Now, laegemiddel, 1, 1, 1, 1);
+            Assert.Fail("Exception når startdato er lig med slutdato");
+        }
+        catch (Exception)
+        {
+            // Forventet exception blev kastet
+        }
+
+        // TC2: Startdato er efter slutdato
+        DateTime startDato = DateTime.Now.AddDays(5);
+        DateTime slutDato = DateTime.Now.AddDays(2); 
+
+        try
+        {
+            DagligFast dagligFast2 = new DagligFast(startDato, slutDato, laegemiddel, 1, 1, 1, 1);
+            Assert.Fail("Exception når startdato er efter slutdato");
+        }
+        catch (Exception)
+        {
+            // Forventet exception blev kastet
+        }
     }
 
     [TestMethod]
@@ -68,7 +129,7 @@ public class ServiceTest
     {
         var result = service.GetAnbefaletDosisPerDøgn(123, 1);
     }
-    
+
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
     public void GetAnbefaletDosisPerDøgnThrowsExceptionOnWrongLaegemiddelId()
