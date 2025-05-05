@@ -43,7 +43,7 @@ public class ServiceTest
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void OpretDagligFastNullExceptionTest()
+    public void TC1OpretDagligFastNullExceptionTest()
     {
         Patient patient = service.GetPatienter().First();
         service.OpretDagligFast(patient.PatientId, 0,
@@ -51,15 +51,18 @@ public class ServiceTest
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
-    public void doegnDosisIsLessThanEqualZero()
+    public void TC2doegnDosisIsLessThanOrEqualToZero()
     {
         Patient patient = service.GetPatienter().First();
         Laegemiddel laegemiddel = service.GetLaegemidler().First();
-        DagligFast dagligFast = new DagligFast(DateTime.Now, DateTime.Now.AddDays(3), laegemiddel, 0, 0, -1, 0);
-        dagligFast.doegnDosis();
-        dagligFast.AftenDosis.antal = 0;
-        dagligFast.doegnDosis();
+
+        // Test case 1: Negative dose
+        DagligFast dagligFastNegative = new DagligFast(DateTime.Now, DateTime.Now.AddDays(3), laegemiddel, 0, 0, -1, 0);
+        Assert.ThrowsException<ArgumentException>(() => dagligFastNegative.doegnDosis());
+
+        // Test case 2: Zero doses
+        DagligFast dagligFastZero = new DagligFast(DateTime.Now, DateTime.Now.AddDays(3), laegemiddel, 0, 0, 0, 0);
+        Assert.ThrowsException<ArgumentException>(() => dagligFastZero.doegnDosis());
     }
 
     [TestMethod]
