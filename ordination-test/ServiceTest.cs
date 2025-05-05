@@ -70,6 +70,13 @@ public class ServiceTest
     }
     
     [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void GetAnbefaletDosisPerDøgnThrowsExceptionOnWrongLaegemiddelId()
+    {
+        var result = service.GetAnbefaletDosisPerDøgn(1, 123);
+    }
+    
+    [TestMethod]
     public void GetAnbefaletDosisPerDøgnWorks()
     {
         var result = service.GetAnbefaletDosisPerDøgn(1, 1);
