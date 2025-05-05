@@ -15,7 +15,7 @@ public class DagligFast : Ordination {
         NatDosis = new Dosis(CreateTimeOnly(23, 59, 0), natAntal);
         if (startDen > slutDen)
         {
-            throw new Exception("StartDen større end slutDen.");
+            throw new ArgumentException("StartDen større end slutDen.");
         }
 	}
 
