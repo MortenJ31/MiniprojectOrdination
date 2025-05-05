@@ -268,4 +268,98 @@ public class ServiceTest
         ordination = new DagligSkæv(new DateTime(2025, 5, 1), new DateTime(2025, 4, 1), lm);
         Assert.ThrowsException<ArgumentException>(() => ordination.antalDage());
     }
+
+    [TestMethod]
+    public void TC1_DatoErStartdato_ReturnsTrueAndAddsDate()
+    {
+        // Arrange
+        var laegemiddel = new Laegemiddel("Acetylsalisylsyre", 0.1, 1.0, 2.0, "Styk");
+        var pn = new PN(new DateTime(2025, 5, 1), new DateTime(2025, 5, 10), 1.0, laegemiddel);
+        var dato = new Dato { dato = new DateTime(2025, 05, 01) };
+
+        // Act
+        var result = pn.givDosis(dato);
+
+        // Assert
+        Assert.IsTrue(result);
+    }
+
+    [TestMethod]
+    public void TC2_DatoErSlutdato_ReturnsTrueAndAddsDate()
+    {
+        // Arrange
+        var laegemiddel = new Laegemiddel("Acetylsalisylsyre", 0.1, 1.0, 2.0, "Styk");
+        var pn = new PN(new DateTime(2025, 5, 1), new DateTime(2023, 5, 10), 1.0, laegemiddel);
+        var dato = new Dato { dato = new DateTime(2025, 05, 10) };
+
+        // Act
+        var result = pn.givDosis(dato);
+
+        // Assert
+        Assert.IsTrue(result);
+    }
+
+    [TestMethod]
+    public void TC3_DatoMellemStartOgSlut_ReturnsTrueAndAddsDate()
+    {
+        // Arrange
+        var laegemiddel = new Laegemiddel("Acetylsalisylsyre", 0.1, 1.0, 2.0, "Styk");
+        var pn = new PN(new DateTime(2025, 5, 1), new DateTime(2023, 5, 10), 1.0, laegemiddel);
+        var dato = new Dato { dato = new DateTime(2025, 05, 05) };
+
+        // Act
+        var result = pn.givDosis(dato);
+
+        // Assert
+        Assert.IsTrue(result);
+    }
+
+    [TestMethod]
+    public void TC4_DatoFørStartdato_ReturnsFalse()
+    {
+        //Arrange
+        var laegemiddel = new Laegemiddel("Acetylsalisylsyre", 0.1, 1.0, 2.0, "Styk");
+        var pn = new PN(new DateTime(2025, 5, 1), new DateTime(2023, 5, 10), 1.0, laegemiddel);
+        var dato = new Dato { dato = new DateTime(2025, 04, 30) };
+
+        //Act
+        var result = pn.givDosis(dato);
+
+        //Assert
+        Assert.IsFalse(result);
+    }
+
+    [TestMethod]
+    public void TC5_DatoEfterSlutdato_ReturnsFalse()
+    {
+        //Arrange
+        var laegemiddel = new Laegemiddel("Acetylsalisylsyre", 0.1, 1.0, 2.0, "Styk");
+        var pn = new PN(new DateTime(2025, 5, 1), new DateTime(2023, 5, 10), 1.0, laegemiddel);
+        var dato = new Dato { dato = new DateTime(2025, 05, 11) };
+
+        //Act
+        var result = pn.givDosis(dato);
+
+        //Assert
+        Assert.IsFalse(result);
+    }
+
+    [TestMethod]
+    public void TC6_SammeDatoToGange_AndenReturnTrueMenIngenDublet()
+    {
+        //Arrange
+        var laegemiddel = new Laegemiddel("Acetylsalisylsyre", 0.1, 1.0, 2.0, "Styk");
+        var pn = new PN(new DateTime(2025, 5, 1), new DateTime(2023, 5, 10), 1.0, laegemiddel);
+        var dato = new Dato { dato = new DateTime(2025, 05, 05) };
+
+        //Act
+        var result1 = pn.givDosis(dato);
+        var result2 = pn.givDosis(dato);
+
+        //Assert
+        Assert.IsTrue(result1);
+        Assert.IsTrue(result2);
+        Assert.AreEqual(1, pn.dates.Count); //Tjekker om datoen kun er tilføjet en gang
+    }
+
 }
