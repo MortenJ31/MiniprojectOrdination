@@ -91,22 +91,11 @@ public class ServiceTest
         Assert.AreEqual(10.5, tc9.doegnDosis(), "TC9: Decimal dose sum 10.5");
     }
 
-    // Test af cojnstructor i DagligFast.cs
+    // Test af constructor i DagligFast.cs
     [TestMethod]
-    public void DagligFastStartDenStørreEllerLigSlutDen()
+    public void DagligFastStartDenStørreEndSlutDen()
     {
         Laegemiddel laegemiddel = service.GetLaegemidler().First();
-
-        // TC1: Startdato er lig med slutdato
-        try
-        {
-            DagligFast dagligFast1 = new DagligFast(DateTime.Now, DateTime.Now, laegemiddel, 1, 1, 1, 1);
-            Assert.Fail("Exception når startdato er lig med slutdato");
-        }
-        catch (Exception)
-        {
-            // Forventet exception blev kastet
-        }
 
         // TC2: Startdato er efter slutdato
         DateTime startDato = DateTime.Now.AddDays(5);
@@ -148,8 +137,8 @@ public class ServiceTest
     public void SamletDosis_TC1_EnDagMedFireDoser()
     {
         //Arrange
-        var StartDato = new DateTime(2025, 5, 1);
-        var SlutDato = new DateTime(2025, 5, 1);
+        var StartDato = DateTime.Now;
+        var SlutDato = DateTime.Now;
         var laegemiddel = service.GetLaegemidler().First();
         var dagligFast = new DagligFast(StartDato, SlutDato, laegemiddel, 1, 1, 1, 1);
 
