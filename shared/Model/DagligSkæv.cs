@@ -29,6 +29,12 @@ public class DagligSkæv : Ordination {
 		{
 			throw new ArgumentException("Samlet dosis kan ikke være <= 0");
 		}
+
+		if (doser.Any(d => d.antal < 0))
+		{
+			throw new ArgumentException("Dosis kan ikke være negativ");
+		}
+		
 		return doegnDosis;
 	}
 
