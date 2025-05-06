@@ -50,13 +50,15 @@ public class ServiceTest
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
+    [ExpectedException(typeof(ArgumentException))] // Forventet Exception
     public void DoegnDosisExceptionTest()
     {
+        // TC1: Negative dose - throws exception
         Laegemiddel laegemiddel = service.GetLaegemidler().First();
         DagligFast tc1 = new DagligFast(DateTime.Now, DateTime.Now.AddDays(3), laegemiddel, 0, 0, -1, 0);
         Assert.ThrowsException<ArgumentException>(() => tc1.doegnDosis(), "TC1: Negative dose throw ArgumentException");
 
+        // TC2: All zeros - throws exception
         DagligFast tc2 = new DagligFast(DateTime.Now, DateTime.Now.AddDays(3), laegemiddel, 0, 0, 0, 0);
         Assert.ThrowsException<ArgumentException>(() => tc2.doegnDosis(), "TC2: Alle parametre som nul throw ArgumentException");
     }
@@ -65,12 +67,6 @@ public class ServiceTest
     public void DoegnDosisTest()
     {
         Laegemiddel laegemiddel = service.GetLaegemidler().First();
-
-        // TC1: Negative dose - throws exception
- 
-
-        // TC2: All zeros - throws exception
-
         // TC3: Morning dose only (1, 0, 0, 0)
         DagligFast tc3 = new DagligFast(DateTime.Now, DateTime.Now.AddDays(3), laegemiddel, 1, 0, 0, 0);
         Assert.AreEqual(1, tc3.doegnDosis(), "TC3: Morgen dose only");
