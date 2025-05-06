@@ -114,23 +114,30 @@ public class ServiceTest
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
-    public void GetAnbefaletDosisPerDøgnThrowsExceptionOnWrongPatientId()
+    public void GetAnbefaletDosisPerDøgn_TC1_ThrowsExceptionOnInvalidPatientId()
     {
-        var result = service.GetAnbefaletDosisPerDøgn(123, 1);
+        service.GetAnbefaletDosisPerDøgn(123, 1);
     }
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
-    public void GetAnbefaletDosisPerDøgnThrowsExceptionOnWrongLaegemiddelId()
+    public void GetAnbefaletDosisPerDøgn_TC2_ThrowsExceptionOnInvalidLaegemiddelId()
     {
-        var result = service.GetAnbefaletDosisPerDøgn(1, 123);
+        service.GetAnbefaletDosisPerDøgn(1, 123);
     }
     
     [TestMethod]
-    public void GetAnbefaletDosisPerDøgnWorks()
+    public void GetAnbefaletDosisPerDøgn_TC3_IsNotNull()
     {
         var result = service.GetAnbefaletDosisPerDøgn(1, 1);
         Assert.IsNotNull(result);
+    }
+    
+    [TestMethod]
+    public void GetAnbefaletDosisPerDøgn_TC4_Math()
+    {
+        var test = service.GetAnbefaletDosisPerDøgn(1, 1);
+        Assert.AreEqual(9.51, test); // Jane Jensen weighs 63.4 kg and the recommended dosage of Acetylsalicylsyre for her weight class is 0.15 (63.4 * 0.15 = 9.51)
     }
 
     [TestMethod]
