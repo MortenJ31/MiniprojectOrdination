@@ -54,6 +54,9 @@ public class ServiceTest
     public void DoegnDosisExceptionTest()
     {
         Laegemiddel laegemiddel = service.GetLaegemidler().First();
+        DagligFast tc1 = new DagligFast(DateTime.Now, DateTime.Now.AddDays(3), laegemiddel, 0, 0, -1, 0);
+        Assert.ThrowsException<ArgumentException>(() => tc1.doegnDosis(), "TC1: Negative dose throw ArgumentException");
+
         DagligFast tc2 = new DagligFast(DateTime.Now, DateTime.Now.AddDays(3), laegemiddel, 0, 0, 0, 0);
         Assert.ThrowsException<ArgumentException>(() => tc2.doegnDosis(), "TC2: Alle parametre som nul throw ArgumentException");
     }
@@ -64,8 +67,7 @@ public class ServiceTest
         Laegemiddel laegemiddel = service.GetLaegemidler().First();
 
         // TC1: Negative dose - throws exception
-        DagligFast tc1 = new DagligFast(DateTime.Now, DateTime.Now.AddDays(3), laegemiddel, 0, 0, -1, 0);
-        Assert.ThrowsException<ArgumentException>(() => tc1.doegnDosis(), "TC1: Negative dose throw ArgumentException");
+ 
 
         // TC2: All zeros - throws exception
 
