@@ -179,6 +179,11 @@ public class DataService
             throw new ArgumentNullException("lægemiddel findes ikke");
         }
 
+        if (startDato > slutDato)
+        {
+            throw new ArgumentException("StartDato er større end slutDato");
+        }
+
         var DagligFast = new DagligFast
         (
             startDato,

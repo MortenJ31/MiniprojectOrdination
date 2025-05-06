@@ -93,7 +93,7 @@
     private DateTime StartDato { get; set; } = DateTime.Now;
     private DateTime SlutDato { get; set; } = DateTime.Now.AddDays(3);
 
-    private async void Opret() {
+    private async Task Opret() {
         try
         {
             if (Patient == null || laegemiddel == null)
