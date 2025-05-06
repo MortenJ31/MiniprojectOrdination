@@ -50,6 +50,15 @@ public class ServiceTest
     }
 
     [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void DoegnDosisExceptionTest()
+    {
+        Laegemiddel laegemiddel = service.GetLaegemidler().First();
+        DagligFast tc2 = new DagligFast(DateTime.Now, DateTime.Now.AddDays(3), laegemiddel, 0, 0, 0, 0);
+        Assert.ThrowsException<ArgumentException>(() => tc2.doegnDosis(), "TC2: Alle parametre som nul throw ArgumentException");
+    }
+
+    [TestMethod]
     public void DoegnDosisTest()
     {
         Laegemiddel laegemiddel = service.GetLaegemidler().First();
@@ -59,8 +68,6 @@ public class ServiceTest
         Assert.ThrowsException<ArgumentException>(() => tc1.doegnDosis(), "TC1: Negative dose throw ArgumentException");
 
         // TC2: All zeros - throws exception
-        DagligFast tc2 = new DagligFast(DateTime.Now, DateTime.Now.AddDays(3), laegemiddel, 0, 0, 0, 0);
-        Assert.ThrowsException<ArgumentException>(() => tc2.doegnDosis(), "TC2: Alle parametre som nul throw ArgumentException");
 
         // TC3: Morning dose only (1, 0, 0, 0)
         DagligFast tc3 = new DagligFast(DateTime.Now, DateTime.Now.AddDays(3), laegemiddel, 1, 0, 0, 0);
@@ -174,6 +181,7 @@ public class ServiceTest
     }
 
     [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
     public void SamletDosis_TC3_FemDageMedNulDoser()
     {
         //Arrange
@@ -203,6 +211,7 @@ public class ServiceTest
     }
 
     [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
     public void SamletDosis_TC5_EnDagMedNulDoser()
     {
         //Arrange
