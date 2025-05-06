@@ -326,7 +326,7 @@ public class ServiceTest
     
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
-    public void doegnDosis_TC3_ReturnSumOfDosesWhenSumIsZero()
+    public void doegnDosis_TC3_ThrowAEWhenSumIsZero()
     {
         Laegemiddel lm = service.GetLaegemidler().First();
         var doses = new Dosis[]
@@ -349,7 +349,7 @@ public class ServiceTest
     
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
-    public void doegnDosis_TC4_ReturnSumOfDosesWhenAllAreNegative()
+    public void doegnDosis_TC4_ThrowAEWhenAllAreNegative()
     {
         Laegemiddel lm = service.GetLaegemidler().First();
         var doses = new Dosis[]
@@ -370,10 +370,9 @@ public class ServiceTest
         var result = dagligSkæv.doegnDosis();
     }
     
-    // !----------------------- TEST FAILS -----------------------!
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
-    public void doegnDosis_TC5_ReturnSumOfDosesWhenOneIsNegative() 
+    public void doegnDosis_TC5_ThrowAEWhenOneIsNegative() 
     {
         Laegemiddel lm = service.GetLaegemidler().First();
         var doses = new Dosis[]
@@ -387,6 +386,68 @@ public class ServiceTest
             {
                 tid = new DateTime(2025, 1, 1),
                 antal = -2
+            }
+        };
+        
+        var dagligSkæv = new DagligSkæv(new DateTime(2025, 5, 1), new DateTime(2025, 5, 7), lm, doses);
+        var result = dagligSkæv.doegnDosis();
+        Console.WriteLine(result);
+    }
+    
+    [TestMethod]
+    public void doegnDosis_TC6_ReturnSumOfDosesForSeveral() 
+    {
+        Laegemiddel lm = service.GetLaegemidler().First();
+        var doses = new Dosis[]
+        {
+            new Dosis()
+            {
+                tid = new DateTime(2025, 1, 1),
+                antal = 10
+            },
+            new Dosis()
+            {
+                tid = new DateTime(2025, 1, 1),
+                antal = 0
+            },
+            new Dosis()
+            {
+            tid = new DateTime(2025, 1, 1),
+            antal = 4
+            },
+            new Dosis()
+            {
+                tid = new DateTime(2025, 1, 1),
+                antal = 6
+            },
+            new Dosis()
+            {
+                tid = new DateTime(2025, 1, 1),
+                antal = 8
+            }
+        };
+        
+        var dagligSkæv = new DagligSkæv(new DateTime(2025, 5, 1), new DateTime(2025, 5, 7), lm, doses);
+        var result = dagligSkæv.doegnDosis();
+        Console.WriteLine(result);
+    }
+    
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void doegnDosis_TC7_ThrowAEWenAllAreZero() 
+    {
+        Laegemiddel lm = service.GetLaegemidler().First();
+        var doses = new Dosis[]
+        {
+            new Dosis()
+            {
+                tid = new DateTime(2025, 1, 1),
+                antal = 0
+            },
+            new Dosis()
+            {
+                tid = new DateTime(2025, 1, 1),
+                antal = 0
             }
         };
         
