@@ -95,6 +95,7 @@
 
     private async void Opret() {
         if (Patient == null || laegemiddel == null || StartDato > SlutDato) {
+            onDone.Invoke("Indtast noget ordentlig data bro");
             return;
         }
         Console.WriteLine("Opret");
