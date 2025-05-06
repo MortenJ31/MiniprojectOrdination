@@ -161,47 +161,48 @@ public class DataService
         return PN;
     }
 
-    public DagligFast OpretDagligFast(int patientId, int laegemiddelId, 
-        double antalMorgen, double antalMiddag, double antalAften, double antalNat, 
-        DateTime startDato, DateTime slutDato) {
-
-        var patient = db.Patienter.Find(patientId);
-        var laegemiddel = db.Laegemiddler.Find(laegemiddelId); 
-
-        // Dette kan reflekteres i test - med testmethod exceptions
-        if (patient == null)
+    public DagligFast OpretDagligFast(int patientId, int laegemiddelId,
+        double antalMorgen, double antalMiddag, double antalAften, double antalNat,
+        DateTime startDato, DateTime slutDato)
+    {
+        try
         {
-            throw new ArgumentNullException("Patient findes ikke"); 
-        }
+            var patient = db.Patienter.Find(patientId);
+            var laegemiddel = db.Laegemiddler.Find(laegemiddelId);
 
-        if (laegemiddel == null)
+            if (patient == null)
+            {
+                Console.Write("Patient findes ikke");
+                throw new ArgumentNullException("Patient findes ikke");
+            }
+
+            if (laegemiddel == null)
+            {
+                Console.Write("Lægemiddel findes ikke");
+                throw new ArgumentNullException("lægemiddel findes ikke");
+            }
+
+            if (startDato > slutDato)
+            {
+                Console.Write("Startdato større end slutdato");
+                throw new ArgumentException("StartDato er større end slutDato");
+            }
+
+            var DagligFast = new DagligFast(startDato, slutDato, laegemiddel, antalMorgen, antalMiddag, antalAften, antalNat);
+            db.Ordinationer.Add(DagligFast);
+            patient.ordinationer.Add(DagligFast);
+
+            db.SaveChanges();
+
+            return DagligFast;
+        }
+        catch (Exception ex)
         {
-            throw new ArgumentNullException("lægemiddel findes ikke");
+            Console.WriteLine($"OpretDagligFast exception: {ex.Message}");
+            throw;
         }
-
-        if (startDato > slutDato)
-        {
-            throw new ArgumentException("StartDato er større end slutDato");
-        }
-
-        var DagligFast = new DagligFast
-        (
-            startDato,
-            slutDato,
-            laegemiddel,
-            antalMorgen,
-            antalMiddag,
-            antalAften,
-            antalNat
-        );
-
-        db.Ordinationer.Add(DagligFast);
-        patient.ordinationer.Add(DagligFast);
-
-        db.SaveChanges(); 
-
-        return DagligFast;
     }
+
 
     public DagligSkæv OpretDagligSkaev(int patientId, int laegemiddelId, Dosis[] doser, DateTime startDato, DateTime slutDato)
     {

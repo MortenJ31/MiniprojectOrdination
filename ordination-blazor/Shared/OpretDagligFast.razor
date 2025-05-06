@@ -93,24 +93,30 @@
     private DateTime StartDato { get; set; } = DateTime.Now;
     private DateTime SlutDato { get; set; } = DateTime.Now.AddDays(3);
 
-    private async Task Opret() {
+    private string? errorMessage;
+
+    private async Task Opret()
+    {
         try
         {
             if (Patient == null || laegemiddel == null)
             {
+                errorMessage = "Patient eller lægemiddel mangler.";
                 return;
             }
-            Console.WriteLine("Opret");
+
             await apiService.OpretDagligFast(Patient.id, laegemiddel.LaegemiddelId, antalMorgen, antalMiddag, antalAften, antalNat, StartDato, SlutDato);
-            Console.WriteLine("Oprettet!");
             onDone?.Invoke($"Oprettet Daglig Fast ordination for {Patient.navn}!");
-        } 
+        }
         catch (ArgumentException e)
         {
-            Console.WriteLine($"Process fejler: {e}");
-            return; 
+            errorMessage = $"Fejl: {e.Message}";
         }
-
+        catch (Exception e)
+        {
+            errorMessage = $"Uventet fejl: {e.Message}";
+        }
     }
+
 
 }
