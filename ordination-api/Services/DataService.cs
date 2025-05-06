@@ -8,298 +8,298 @@ namespace Service;
 
 public class DataService
 {
-    private OrdinationContext db { get; }
+	private OrdinationContext db { get; }
 
-    public DataService(OrdinationContext db) {
-        this.db = db;
-    }
+	public DataService(OrdinationContext db) {
+		this.db = db;
+	}
 
-    /// <summary>
-    /// Seeder noget nyt data i databasen, hvis det er nødvendigt.
-    /// </summary>
-    public void SeedData() {
+	/// <summary>
+	/// Seeder noget nyt data i databasen, hvis det er nødvendigt.
+	/// </summary>
+	public void SeedData() {
 
-        // Patients
-        Patient[] patients = new Patient[5];
-        patients[0] = db.Patienter.FirstOrDefault()!;
+		// Patients
+		Patient[] patients = new Patient[5];
+		patients[0] = db.Patienter.FirstOrDefault()!;
 
-        if (patients[0] == null)
-        {
-            patients[0] = new Patient("121256-0512", "Jane Jensen", 63.4);
-            patients[1] = new Patient("070985-1153", "Finn Madsen", 83.2);
-            patients[2] = new Patient("050972-1233", "Hans Jørgensen", 89.4);
-            patients[3] = new Patient("011064-1522", "Ulla Nielsen", 59.9);
-            patients[4] = new Patient("123456-1234", "Ib Hansen", 87.7);
+		if (patients[0] == null)
+		{
+			patients[0] = new Patient("121256-0512", "Jane Jensen", 63.4);
+			patients[1] = new Patient("070985-1153", "Finn Madsen", 83.2);
+			patients[2] = new Patient("050972-1233", "Hans Jørgensen", 89.4);
+			patients[3] = new Patient("011064-1522", "Ulla Nielsen", 59.9);
+			patients[4] = new Patient("123456-1234", "Ib Hansen", 87.7);
 
-            db.Patienter.Add(patients[0]);
-            db.Patienter.Add(patients[1]);
-            db.Patienter.Add(patients[2]);
-            db.Patienter.Add(patients[3]);
-            db.Patienter.Add(patients[4]);
-            db.SaveChanges();
-        }
+			db.Patienter.Add(patients[0]);
+			db.Patienter.Add(patients[1]);
+			db.Patienter.Add(patients[2]);
+			db.Patienter.Add(patients[3]);
+			db.Patienter.Add(patients[4]);
+			db.SaveChanges();
+		}
 
-        Laegemiddel[] laegemiddler = new Laegemiddel[5];
-        laegemiddler[0] = db.Laegemiddler.FirstOrDefault()!;
-        if (laegemiddler[0] == null)
-        {
-            laegemiddler[0] = new Laegemiddel("Acetylsalicylsyre", 0.1, 0.15, 0.16, "Styk");
-            laegemiddler[1] = new Laegemiddel("Paracetamol", 1, 1.5, 2, "Ml");
-            laegemiddler[2] = new Laegemiddel("Fucidin", 0.025, 0.025, 0.025, "Styk");
-            laegemiddler[3] = new Laegemiddel("Methotrexat", 0.01, 0.015, 0.02, "Styk");
-            laegemiddler[4] = new Laegemiddel("Prednisolon", 0.1, 0.15, 0.2, "Styk");
+		Laegemiddel[] laegemiddler = new Laegemiddel[5];
+		laegemiddler[0] = db.Laegemiddler.FirstOrDefault()!;
+		if (laegemiddler[0] == null)
+		{
+			laegemiddler[0] = new Laegemiddel("Acetylsalicylsyre", 0.1, 0.15, 0.16, "Styk");
+			laegemiddler[1] = new Laegemiddel("Paracetamol", 1, 1.5, 2, "Ml");
+			laegemiddler[2] = new Laegemiddel("Fucidin", 0.025, 0.025, 0.025, "Styk");
+			laegemiddler[3] = new Laegemiddel("Methotrexat", 0.01, 0.015, 0.02, "Styk");
+			laegemiddler[4] = new Laegemiddel("Prednisolon", 0.1, 0.15, 0.2, "Styk");
 
-            db.Laegemiddler.Add(laegemiddler[0]);
-            db.Laegemiddler.Add(laegemiddler[1]);
-            db.Laegemiddler.Add(laegemiddler[2]);
-            db.Laegemiddler.Add(laegemiddler[3]);
-            db.Laegemiddler.Add(laegemiddler[4]);
+			db.Laegemiddler.Add(laegemiddler[0]);
+			db.Laegemiddler.Add(laegemiddler[1]);
+			db.Laegemiddler.Add(laegemiddler[2]);
+			db.Laegemiddler.Add(laegemiddler[3]);
+			db.Laegemiddler.Add(laegemiddler[4]);
 
-            db.SaveChanges();
-        }
+			db.SaveChanges();
+		}
 
-        Ordination[] ordinationer = new Ordination[6];
-        ordinationer[0] = db.Ordinationer.FirstOrDefault()!;
-        if (ordinationer[0] == null) {
-            Laegemiddel[] lm = db.Laegemiddler.ToArray();
-            Patient[] p = db.Patienter.ToArray();
+		Ordination[] ordinationer = new Ordination[6];
+		ordinationer[0] = db.Ordinationer.FirstOrDefault()!;
+		if (ordinationer[0] == null) {
+			Laegemiddel[] lm = db.Laegemiddler.ToArray();
+			Patient[] p = db.Patienter.ToArray();
 
-            ordinationer[0] = new PN(new DateTime(2025, 1, 1), new DateTime(2025, 1, 12), 123, lm[1]);    
-            ordinationer[1] = new PN(new DateTime(2025, 2, 12), new DateTime(2025, 2, 14), 3, lm[0]);    
-            ordinationer[2] = new PN(new DateTime(2025, 1, 20), new DateTime(2025, 1, 25), 5, lm[2]);    
-            ordinationer[3] = new PN(new DateTime(2025, 1, 1), new DateTime(2025, 1, 12), 123, lm[1]);
-            ordinationer[4] = new DagligFast(new DateTime(2025, 1, 10), new DateTime(2025, 1, 12), lm[1], 2, 0, 1, 0);
-            ordinationer[5] = new DagligSkæv(new DateTime(2025, 1, 23), new DateTime(2025, 1, 24), lm[2]);
-            
-            ((DagligSkæv) ordinationer[5]).doser = new Dosis[] { 
-                new Dosis(CreateTimeOnly(12, 0, 0), 0.5),
-                new Dosis(CreateTimeOnly(12, 40, 0), 1),
-                new Dosis(CreateTimeOnly(16, 0, 0), 2.5),
-                new Dosis(CreateTimeOnly(18, 45, 0), 3)        
-            }.ToList();
-            
+			ordinationer[0] = new PN(new DateTime(2025, 1, 1), new DateTime(2025, 1, 12), 123, lm[1]);    
+			ordinationer[1] = new PN(new DateTime(2025, 2, 12), new DateTime(2025, 2, 14), 3, lm[0]);    
+			ordinationer[2] = new PN(new DateTime(2025, 1, 20), new DateTime(2025, 1, 25), 5, lm[2]);    
+			ordinationer[3] = new PN(new DateTime(2025, 1, 1), new DateTime(2025, 1, 12), 123, lm[1]);
+			ordinationer[4] = new DagligFast(new DateTime(2025, 1, 10), new DateTime(2025, 1, 12), lm[1], 2, 0, 1, 0);
+			ordinationer[5] = new DagligSkæv(new DateTime(2025, 1, 23), new DateTime(2025, 1, 24), lm[2]);
+			
+			((DagligSkæv) ordinationer[5]).doser = new Dosis[] { 
+				new Dosis(CreateTimeOnly(12, 0, 0), 0.5),
+				new Dosis(CreateTimeOnly(12, 40, 0), 1),
+				new Dosis(CreateTimeOnly(16, 0, 0), 2.5),
+				new Dosis(CreateTimeOnly(18, 45, 0), 3)        
+			}.ToList();
+			
 
-            db.Ordinationer.Add(ordinationer[0]);
-            db.Ordinationer.Add(ordinationer[1]);
-            db.Ordinationer.Add(ordinationer[2]);
-            db.Ordinationer.Add(ordinationer[3]);
-            db.Ordinationer.Add(ordinationer[4]);
-            db.Ordinationer.Add(ordinationer[5]);
+			db.Ordinationer.Add(ordinationer[0]);
+			db.Ordinationer.Add(ordinationer[1]);
+			db.Ordinationer.Add(ordinationer[2]);
+			db.Ordinationer.Add(ordinationer[3]);
+			db.Ordinationer.Add(ordinationer[4]);
+			db.Ordinationer.Add(ordinationer[5]);
 
-            db.SaveChanges();
+			db.SaveChanges();
 
-            p[0].ordinationer.Add(ordinationer[0]);
-            p[0].ordinationer.Add(ordinationer[1]);
-            p[2].ordinationer.Add(ordinationer[2]);
-            p[3].ordinationer.Add(ordinationer[3]);
-            p[1].ordinationer.Add(ordinationer[4]);
-            p[1].ordinationer.Add(ordinationer[5]);
+			p[0].ordinationer.Add(ordinationer[0]);
+			p[0].ordinationer.Add(ordinationer[1]);
+			p[2].ordinationer.Add(ordinationer[2]);
+			p[3].ordinationer.Add(ordinationer[3]);
+			p[1].ordinationer.Add(ordinationer[4]);
+			p[1].ordinationer.Add(ordinationer[5]);
 
-            db.SaveChanges();
-        }
-    }
+			db.SaveChanges();
+		}
+	}
 
-    
-    public List<PN> GetPNs() {
-        return db.PNs.Include(o => o.laegemiddel).Include(o => o.dates).ToList();
-    }
+	
+	public List<PN> GetPNs() {
+		return db.PNs.Include(o => o.laegemiddel).Include(o => o.dates).ToList();
+	}
 
-    public List<DagligFast> GetDagligFaste() {
-        return db.DagligFaste
-            .Include(o => o.laegemiddel)
-            .Include(o => o.MorgenDosis)
-            .Include(o => o.MiddagDosis)
-            .Include(o => o.AftenDosis)            
-            .Include(o => o.NatDosis)            
-            .ToList();
-    }
+	public List<DagligFast> GetDagligFaste() {
+		return db.DagligFaste
+			.Include(o => o.laegemiddel)
+			.Include(o => o.MorgenDosis)
+			.Include(o => o.MiddagDosis)
+			.Include(o => o.AftenDosis)            
+			.Include(o => o.NatDosis)            
+			.ToList();
+	}
 
-    public List<DagligSkæv> GetDagligSkæve() {
-        return db.DagligSkæve
-            .Include(o => o.laegemiddel)
-            .Include(o => o.doser)
-            .ToList();
-    }
+	public List<DagligSkæv> GetDagligSkæve() {
+		return db.DagligSkæve
+			.Include(o => o.laegemiddel)
+			.Include(o => o.doser)
+			.ToList();
+	}
 
-    public List<Patient> GetPatienter() {
-        return db.Patienter.Include(p => p.ordinationer).ToList();
-    }
+	public List<Patient> GetPatienter() {
+		return db.Patienter.Include(p => p.ordinationer).ToList();
+	}
 
-    public List<Laegemiddel> GetLaegemidler() {
-        return db.Laegemiddler.ToList();
-    }
+	public List<Laegemiddel> GetLaegemidler() {
+		return db.Laegemiddler.ToList();
+	}
 
-    public PN OpretPN(int patientId, int laegemiddelId, double antal, DateTime startDato, DateTime slutDato) {
+	public PN OpretPN(int patientId, int laegemiddelId, double antal, DateTime startDato, DateTime slutDato) {
 
-        var patient = db.Patienter.Find(patientId);
-        var laegemiddel = db.Laegemiddler.Find(laegemiddelId);
+		var patient = db.Patienter.Find(patientId);
+		var laegemiddel = db.Laegemiddler.Find(laegemiddelId);
 
-        // Dette kan reflekteres i test - med testmethod exceptions
-        if (patient == null)
-        {
-            throw new ArgumentException("Patient findes ikke");
-        }
+		// Dette kan reflekteres i test - med testmethod exceptions
+		if (patient == null)
+		{
+			throw new ArgumentException("Patient findes ikke");
+		}
 
-        if (laegemiddel == null)
-        {
-            throw new ArgumentException("lægemiddel findes ikke");
-        }
+		if (laegemiddel == null)
+		{
+			throw new ArgumentException("lægemiddel findes ikke");
+		}
 
-        var PN = new PN
-        (
-            startDato,
-            slutDato,
-            antal, 
-            laegemiddel
-        );
+		var PN = new PN
+		(
+			startDato,
+			slutDato,
+			antal, 
+			laegemiddel
+		);
 
-        db.Ordinationer.Add(PN);
-        patient.ordinationer.Add(PN);
-        
-        db.SaveChanges(); 
+		db.Ordinationer.Add(PN);
+		patient.ordinationer.Add(PN);
+		
+		db.SaveChanges(); 
 
-        return PN;
-    }
+		return PN;
+	}
 
-    public DagligFast OpretDagligFast(int patientId, int laegemiddelId, 
-        double antalMorgen, double antalMiddag, double antalAften, double antalNat, 
-        DateTime startDato, DateTime slutDato) {
+	public DagligFast OpretDagligFast(int patientId, int laegemiddelId, 
+		double antalMorgen, double antalMiddag, double antalAften, double antalNat, 
+		DateTime startDato, DateTime slutDato) {
 
-        var patient = db.Patienter.Find(patientId);
-        var laegemiddel = db.Laegemiddler.Find(laegemiddelId); 
+		var patient = db.Patienter.Find(patientId);
+		var laegemiddel = db.Laegemiddler.Find(laegemiddelId); 
 
-        // Dette kan reflekteres i test - med testmethod exceptions
-        if (patient == null)
-        {
-            throw new ArgumentException("Patient findes ikke"); 
-        }
+		// Dette kan reflekteres i test - med testmethod exceptions
+		if (patient == null)
+		{
+			throw new ArgumentException("Patient findes ikke"); 
+		}
 
-        if (laegemiddel == null)
-        {
-            throw new ArgumentException("lægemiddel findes ikke");
-        }
+		if (laegemiddel == null)
+		{
+			throw new ArgumentException("lægemiddel findes ikke");
+		}
 
-        var DagligFast = new DagligFast
-        (
-            startDato,
-            slutDato,
-            laegemiddel,
-            antalMorgen,
-            antalMiddag,
-            antalAften,
-            antalNat
-        );
+		var DagligFast = new DagligFast
+		(
+			startDato,
+			slutDato,
+			laegemiddel,
+			antalMorgen,
+			antalMiddag,
+			antalAften,
+			antalNat
+		);
 
-        db.Ordinationer.Add(DagligFast);
-        patient.ordinationer.Add(DagligFast);
+		db.Ordinationer.Add(DagligFast);
+		patient.ordinationer.Add(DagligFast);
 
-        db.SaveChanges(); 
+		db.SaveChanges(); 
 
-        return DagligFast;
-    }
+		return DagligFast;
+	}
 
-    public DagligSkæv OpretDagligSkaev(int patientId, int laegemiddelId, Dosis[] doser, DateTime startDato, DateTime slutDato)
-    {
-        var patient = db.Patienter.Find(patientId);
-        var laegemiddel = db.Laegemiddler.Find(laegemiddelId); 
-        var dagligSkæv = new DagligSkæv(
-            startDato,
-            slutDato,
-            laegemiddel,
-            doser);
-        
-        if (patient == null)
-        {
-            throw new ArgumentException("Patient findes ikke"); 
-        }
+	public DagligSkæv OpretDagligSkaev(int patientId, int laegemiddelId, Dosis[] doser, DateTime startDato, DateTime slutDato)
+	{
+		var patient = db.Patienter.Find(patientId);
+		var laegemiddel = db.Laegemiddler.Find(laegemiddelId); 
+		var dagligSkæv = new DagligSkæv(
+			startDato,
+			slutDato,
+			laegemiddel,
+			doser);
+		
+		if (patient == null)
+		{
+			throw new ArgumentException("Patient findes ikke"); 
+		}
 
-        if (laegemiddel == null)
-        {
-            throw new ArgumentException("lægemiddel findes ikke");
-        }
+		if (laegemiddel == null)
+		{
+			throw new ArgumentException("lægemiddel findes ikke");
+		}
 
-        db.Ordinationer.Add(dagligSkæv);
-        patient.ordinationer.Add(dagligSkæv);
+		db.Ordinationer.Add(dagligSkæv);
+		patient.ordinationer.Add(dagligSkæv);
 
-        db.SaveChanges(); 
+		db.SaveChanges(); 
 
-        return dagligSkæv;
-    }
+		return dagligSkæv;
+	}
 
-    public string AnvendOrdination(int id, Dato dato) 
-    {    
-        //Find ordinationen i databasen baseret på ID
-        var ordination = db.Ordinationer.FirstOrDefault(o => o.OrdinationId == id);
+	public string AnvendOrdination(int id, Dato dato) 
+	{    
+		//Find ordinationen i databasen baseret på ID
+		var ordination = db.Ordinationer.FirstOrDefault(o => o.OrdinationId == id);
 
-        //Tjek om ordinationen findes
-        if (ordination == null)
-        {
-            throw new ArgumentException("Ordinationen blev ikke fundet.");
-        }
+		//Tjek om ordinationen findes
+		if (ordination == null)
+		{
+			throw new ArgumentException("Ordinationen blev ikke fundet.");
+		}
 
-        //Tjek om ordination er gyldig
-        if (ordination.slutDen < dato.dato)
-        {
-            throw new InvalidOperationException("Ordinationen er udløbet og kan ikke anvendes.");
-        }
+		//Tjek om ordination er gyldig
+		if (ordination.slutDen < dato.dato)
+		{
+			throw new InvalidOperationException("Ordinationen er udløbet og kan ikke anvendes.");
+		}
 
-        //Hvis det er en PN-ordination, skal anvendelsen logges
-        if (ordination is PN pnOrdination)
-        {
-            //Tilføj datoen til listen over anvendelsesdatoer
-            pnOrdination.dates.Add(dato);
+		//Hvis det er en PN-ordination, skal anvendelsen logges
+		if (ordination is PN pnOrdination)
+		{
+			//Tilføj datoen til listen over anvendelsesdatoer
+			pnOrdination.dates.Add(dato);
 
-            //Gem ændringer i databasen
-            db.SaveChanges();
+			//Gem ændringer i databasen
+			db.SaveChanges();
 
-            return "Ordinationen blev anvendt.";
-        }
+			return "Ordinationen blev anvendt.";
+		}
 
-        //Hvis ordinationen ikke er af typen PN, kast en exception
-        throw new NotSupportedException("Kun PN-ordinationer kan anvendes på denne måde");
-    }
+		//Hvis ordinationen ikke er af typen PN, kast en exception
+		throw new NotSupportedException("Kun PN-ordinationer kan anvendes på denne måde");
+	}
 
-    /// <summary>
-    /// Den anbefalede dosis for den pågældende patient, per døgn, hvor der skal tages hensyn til
+	/// <summary>
+	/// Den anbefalede dosis for den pågældende patient, per døgn, hvor der skal tages hensyn til
 	/// patientens vægt. Enheden afhænger af lægemidlet. Patient og lægemiddel må ikke være null.
-    /// </summary>
-    /// <param name="patient"></param>
-    /// <param name="laegemiddel"></param>
-    /// <returns></returns>
+	/// </summary>
+	/// <param name="patient"></param>
+	/// <param name="laegemiddel"></param>
+	/// <returns></returns>
 	public double GetAnbefaletDosisPerDøgn(int patientId, int laegemiddelId) {
-        var patient = db.Patienter.Find(patientId);
-        var laegemiddel = db.Laegemiddler.Find(laegemiddelId);
-        var weight = patient.vaegt;
-        double recommendedDosage = 0;
-        
-        if (patient == null)
-        {
-            throw new ArgumentException("Patient findes ikke"); 
-        }
+		var patient = db.Patienter.Find(patientId);
+		var laegemiddel = db.Laegemiddler.Find(laegemiddelId);
+		var weight = patient.vaegt;
+		double recommendedDosage = 0;
+		
+		if (patient == null)
+		{
+			throw new ArgumentException("Patient findes ikke"); 
+		}
 
-        if (laegemiddel == null)
-        {
-            throw new ArgumentException("lægemiddel findes ikke");
-        }
-        
-        switch (weight)
-        {
-            case < 25:
-            {
-                recommendedDosage = weight * laegemiddel.enhedPrKgPrDoegnLet;
-                return recommendedDosage;
-            }
-            case >= 25 and <= 120:
-            {
-                recommendedDosage = weight * laegemiddel.enhedPrKgPrDoegnNormal;
-                return recommendedDosage;
-            }
-            case > 120:
-            {
-                recommendedDosage = weight * laegemiddel.enhedPrKgPrDoegnTung;
-                return recommendedDosage;
-            }
-        }
-        throw new InvalidOperationException("Kunne ikke bestemme dosis for den angivne vægt.");
-    }
+		if (laegemiddel == null)
+		{
+			throw new ArgumentException("lægemiddel findes ikke");
+		}
+		
+		switch (weight)
+		{
+			case < 25:
+			{
+				recommendedDosage = weight * laegemiddel.enhedPrKgPrDoegnLet;
+				return recommendedDosage;
+			}
+			case >= 25 and <= 120:
+			{
+				recommendedDosage = weight * laegemiddel.enhedPrKgPrDoegnNormal;
+				return recommendedDosage;
+			}
+			case > 120:
+			{
+				recommendedDosage = weight * laegemiddel.enhedPrKgPrDoegnTung;
+				return recommendedDosage;
+			}
+		}
+		throw new InvalidOperationException("Kunne ikke bestemme dosis for den angivne vægt.");
+	}
 }
