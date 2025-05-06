@@ -171,12 +171,12 @@ public class DataService
 		// Dette kan reflekteres i test - med testmethod exceptions
 		if (patient == null)
 		{
-			throw new ArgumentException("Patient findes ikke"); 
+			throw new ArgumentNullException("Patient findes ikke"); 
 		}
 
 		if (laegemiddel == null)
 		{
-			throw new ArgumentException("lægemiddel findes ikke");
+			throw new ArgumentNullException("lægemiddel findes ikke");
 		}
 
 		var DagligFast = new DagligFast
@@ -269,19 +269,19 @@ public class DataService
 	public double GetAnbefaletDosisPerDøgn(int patientId, int laegemiddelId) {
 		var patient = db.Patienter.Find(patientId);
 		var laegemiddel = db.Laegemiddler.Find(laegemiddelId);
-		var weight = patient.vaegt;
 		double recommendedDosage = 0;
 		
 		if (patient == null)
 		{
 			throw new ArgumentException("Patient findes ikke"); 
 		}
-
+		
 		if (laegemiddel == null)
 		{
 			throw new ArgumentException("lægemiddel findes ikke");
 		}
 		
+		var weight = patient.vaegt;
 		switch (weight)
 		{
 			case < 25:

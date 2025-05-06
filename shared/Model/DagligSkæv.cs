@@ -21,8 +21,21 @@ public class DagligSkæv : Ordination {
 		return base.antalDage() * doegnDosis();
 	}
 
-	public override double doegnDosis() {
-		return doser.Sum(d => d.antal); // Does this need to check the date somehow??
+	public override double doegnDosis()
+	{
+		var doegnDosis = doser.Sum(d => d.antal);
+		
+		if (doegnDosis <= 0)
+		{
+			throw new ArgumentException("Samlet dosis kan ikke være <= 0");
+		}
+
+		if (doser.Any(d => d.antal < 0))
+		{
+			throw new ArgumentException("Dosis kan ikke være negativ");
+		}
+		
+		return doegnDosis;
 	}
 
 	public override String getType() {
