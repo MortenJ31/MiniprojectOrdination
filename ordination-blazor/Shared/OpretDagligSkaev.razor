@@ -100,7 +100,9 @@
     private int Antal { get; set; }
 
     private async void Opret() {
-        if (Patient == null || laegemiddel == null) {
+        if (Patient == null || laegemiddel == null || StartDato > SlutDato || doser.Count == 0)
+        {
+            onDone.Invoke("Indtast noget ordentlig data bro");
             return;
         }
         Console.WriteLine("Opret");

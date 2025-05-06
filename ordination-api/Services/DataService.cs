@@ -179,6 +179,11 @@ public class DataService
 			throw new ArgumentNullException("lægemiddel findes ikke");
 		}
 
+		if (antalMorgen + antalMiddag + antalAften + antalNat == 0)
+		{
+			throw new ArgumentException("Dosis er lige 0");
+		}
+
 		var DagligFast = new DagligFast
 		(
 			startDato,

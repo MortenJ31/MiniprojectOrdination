@@ -94,7 +94,7 @@
     private DateTime SlutDato { get; set; } = DateTime.Now.AddDays(3);
 
     private async void Opret() {
-        if (Patient == null || laegemiddel == null || StartDato > SlutDato) {
+        if (Patient == null || laegemiddel == null || StartDato > SlutDato || antalMorgen + antalMiddag + antalAften + antalNat == 0) {
             onDone.Invoke("Indtast noget ordentlig data bro");
             return;
         }
