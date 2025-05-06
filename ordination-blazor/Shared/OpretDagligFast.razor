@@ -94,13 +94,22 @@
     private DateTime SlutDato { get; set; } = DateTime.Now.AddDays(3);
 
     private async void Opret() {
-        if (Patient == null || laegemiddel == null) {
-            return;
+        try
+        {
+            if (Patient == null || laegemiddel == null)
+            {
+                return;
+            }
+            Console.WriteLine("Opret");
+            await apiService.OpretDagligFast(Patient.id, laegemiddel.LaegemiddelId, antalMorgen, antalMiddag, antalAften, antalNat, StartDato, SlutDato);
+            Console.WriteLine("Oprettet!");
+            onDone?.Invoke($"Oprettet Daglig Fast ordination for {Patient.navn}!");
+        } 
+        catch (ArgumentException e)
+        {
+            Console.WriteLine($"Process fejler: {e}");
         }
-        Console.WriteLine("Opret");
-        await apiService.OpretDagligFast(Patient.id, laegemiddel.LaegemiddelId, antalMorgen, antalMiddag, antalAften, antalNat, StartDato, SlutDato);
-        Console.WriteLine("Oprettet!");
-        onDone?.Invoke($"Oprettet Daglig Fast ordination for {Patient.navn}!");
+
     }
 
 }
